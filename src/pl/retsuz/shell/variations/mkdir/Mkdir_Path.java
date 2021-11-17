@@ -21,18 +21,7 @@ public class Mkdir_Path extends CommandVariation {
 
         int index = 0;
 
-        for (String param : subParams) {
-            try {
-                temElem = currentElem.findElementByPath(param);
 
-                if (temElem != null) {
-                    index++;
-                    currentElem = (Composite) temElem;
-                } else break;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
         if (subParams.length - 1 >= index) {
             for (int i = index; i <= subParams.length - 1; i++) {

@@ -10,23 +10,21 @@ public class Mv_Path extends CommandVariation
 {
     public Mv_Path(ICommandVariation next, ICommand parent)
     {
-        super(next,parent,"([a-zA-Z0-9.l\\/_]*) *([a-zA-Z0-9.l\\/_]*)");
+        super(next,parent,"([a-zA-Z0-9.l\\/_]*\\s[a-zA-Z0-9.l\\/_]*)");
     }
 
     @Override
     public void make(String params)
     {
+        Composite c = (Composite) this.getParent().getContext().getCurrent();
         String[] paramsArr = params.split(" ");
-        System.out.println(params);
-        System.out.println(paramsArr[1]);
 
         try {
-            Composite currentPath = (Composite) this.getParent().getContext().getCurrent();
-            Composite src = (Composite) currentPath.findElementByPath(paramsArr[0]);
-            Composite dst = (Composite) currentPath.findElementByPath(paramsArr[1]);
-            ((Composite) src.getParent()).removeElement(src);
-            src.setParent(dst);
-            dst.addElement(src);
+            IComposite src = c.findElementByPath(paramsArr[0]);
+            IComposite src2 = src.getParent();
+            IComposite destination = c.findElementByPath(paramsArr[1]);
+            Composite.moveElement(src2, destination, src);
+            System.out.println("Plik/katalog zostal przeniesiony");
         } catch (Exception e) {
             e.printStackTrace();
         }

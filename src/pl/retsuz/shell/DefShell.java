@@ -10,9 +10,12 @@ import pl.retsuz.shell.variations.gen.ICommandVariation;
 import pl.retsuz.shell.variations.ls.LS_Def;
 import pl.retsuz.shell.variations.ls.LS_Path;
 import pl.retsuz.shell.variations.ls.LS_ddot;
+import pl.retsuz.shell.variations.mkdir.Mkdir_Def;
 import pl.retsuz.shell.variations.mkdir.Mkdir_Path;
 import pl.retsuz.shell.variations.more.More_Def;
 import pl.retsuz.shell.variations.mv.Mv_Path;
+import pl.retsuz.shell.variations.rm.Rm_Def;
+import pl.retsuz.shell.variations.rm.Rm_Path;
 import pl.retsuz.shell.variations.tree.Tree_Def;
 import pl.retsuz.shell.variations.tree.Tree_Path;
 import pl.retsuz.shell.variations.tree.Tree_ddot;
@@ -23,9 +26,15 @@ public abstract class DefShell {
         ICommandVariation mv_path = new Mv_Path(null, mv);
         mv.set_default(mv_path);
 
-        ICommand mkdir = new Mkdir(ctx, mv);
+        ICommand rm = new Rm(ctx, mv);
+        ICommandVariation rm_path =  new Rm_Path(null, rm);
+        ICommandVariation rm_def = new Rm_Def(rm_path, rm);
+        rm.set_default(rm_def);
+
+        ICommand mkdir = new Mkdir(ctx, rm);
         ICommandVariation mkdir_path = new Mkdir_Path(null, mkdir);
-        mkdir.set_default(mkdir_path);
+        ICommandVariation mkdir_def = new Mkdir_Def(mkdir_path, mkdir);
+        mkdir.set_default(mkdir_def);
 
         ICommand more = new More(ctx, mkdir);
         ICommandVariation more_def= new More_Def(null, more);
